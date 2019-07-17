@@ -4,6 +4,7 @@ CONFDIR=/etc/exim4
 
 # By default, send email directly to the recipient.
 DC_EXIMCONFIG_CONFIGTYPE="internet"
+DC_READHOST=""
 
 # By default, only hosts on the private network can use the smart host (ie,
 # only other containers, not the whole internet); a thin layer of protection
@@ -19,6 +20,11 @@ if [ "x$RELAY_HOST" != "x" ]; then
     fi
 fi
 
+if [ "x$READ_HOST" != "x" ]; then
+    DC_READHOST="${READ_HOST}"
+fi
+
+
 # Set which hosts can use the smart host.
 if [ "x$RELAY_NETS" != "x" ]; then
     DC_RELAY_NETS="$RELAY_NETS"
@@ -29,7 +35,7 @@ cat << EOF > "$CONFDIR/update-exim4.conf.conf"
 dc_eximconfig_configtype='$DC_EXIMCONFIG_CONFIGTYPE'
 dc_other_hostnames=''
 dc_local_interfaces=''
-dc_readhost=''
+dc_readhost='${DC_READHOST}'
 dc_relay_domains=''
 dc_minimaldns='false'
 dc_relay_nets='$DC_RELAY_NETS'

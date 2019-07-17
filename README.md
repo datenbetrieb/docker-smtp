@@ -48,6 +48,7 @@ to an intermediate server server (eg, GMail, SendGrid).
 
 ```
 docker run --restart always --name mail \
+    -e READ_HOST=outgoing.example.com \
     -e RELAY_HOST=smtp.example.com \
     -e RELAY_PORT=587 \
     -e RELAY_USERNAME=alice@example.com \
@@ -65,6 +66,7 @@ services:
     image: bytemark/smtp
     restart: always
     environment:
+      READ_HOST: outgoing.example.com
       RELAY_HOST: smtp.example.com
       RELAY_PORT: 587
       RELAY_USERNAME: alice@example.com
